@@ -16,9 +16,12 @@ export const obtenerPosts = async () => {
 export const agregarPost = async (post) => {
   const { titulo, img, descripcion } = post;
   const consulta =
-    "INSERT INTO posts (titulo, img, descripcion) VALUES ($1, $2, $3) RETURNING *";
+    "INSERT INTO posts (titulo, img, descripcion) VALUES ($1, $2, $3)";
   const values = [titulo, img, descripcion];
-  const { rows } = await pool.query(consulta, values);
+  await pool.query(consulta, values);
+  const selectUltimoPost =
+    "SELECT * FROM posts WHERE titulo = $1 AND img = $2 AND descripcion = $3 ORDER BY id DESC LIMIT 1";
+  const { rows } = await pool.query(selectUltimoPost, values);
   return rows[0];
 };
 
