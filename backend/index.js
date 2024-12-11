@@ -16,7 +16,6 @@ app.listen(3000, console.log("¡Servidor encendido!"));
 
 app.get("/posts", async (req, res) => {
   try {
-    // const posts = await obtenerPosts();
     res.json(await obtenerPosts());
   } catch (error) {
     res.status(500).send(error);
@@ -44,7 +43,6 @@ app.post("/posts", async (req, res) => {
 app.put("/posts/like/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    // await modificarPost(id);
     res.json(await modificarPost(id));
   } catch ({ code, message }) {
     res.status(code).send(message);
